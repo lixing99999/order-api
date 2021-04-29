@@ -2,8 +2,8 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('payments', { schema: 'setel-assessment' })
 export class Payments {
-  static readonly STATUS_CONFIRMED = 1;
-  static readonly STATUS_CANCELLED = 2;
+  static readonly TRANSACTION_SUCCESS = 1;
+  static readonly TRANSACTION_RETURNED = 2;
 
   @PrimaryGeneratedColumn({ type: 'int', name: 'id', unsigned: true })
   id: number;

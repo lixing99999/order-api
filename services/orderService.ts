@@ -74,7 +74,7 @@ export default class OrderService {
         const payment = await paymentService.updatePayment(userId, orderId);
         if (payment?.status == 200) {
           setTimeout(async () => {
-            await this.updateOrder(userId, orderId, Orders.STATUS_DELIVERED);
+            await this.updateOrder(userId, orderId, Orders.STATUS_CANCEL);
             console.log('delivered');
           }, 60000);
         }

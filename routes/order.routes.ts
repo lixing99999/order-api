@@ -1,4 +1,4 @@
-import { createOrder, getOrder, updateOrder, test } from '../controllers/orderController';
+import { createOrder, getOrder, updateOrder } from '../controllers/orderController';
 import Joi = require('joi');
 import { orderValidate } from '../validate/orderValidate';
 import { ResponseToolkit } from '@hapi/hapi';

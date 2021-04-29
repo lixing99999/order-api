@@ -1,4 +1,5 @@
 import { Server, ResponseToolkit } from '@hapi/hapi';
+import { initDb } from './db/conn';
 const _ = require('lodash');
 const Hapi = require('@hapi/hapi');
 const colors = require('colors');
@@ -8,22 +9,22 @@ const init = async () => {
   console.log(colors.yellow('STARTING SERVER. PLEASE WAIT...'));
 
   const server: Server = Hapi.server({
-    port: process.env.PORT || 5000,
-    host: process.env.YOUR_HOST || '0.0.0.0',
+    port: process.env.PORT || 3000,
+    host: '127.0.0.1',
     routes: {
       cors: {
         origin: ['*'], // an array of origins or 'ignore'
       },
     },
+    debug: process.env.NODE_ENV !== 'production' ? { request: ['*'] } : false,
   });
 
-  server.route({
-    method: 'GET',
-    path: '/test',
-    handler: () => {
-      return 'hello';
-    },
-  });
+  // mysql
+  await initDb();
+
+  // // routes
+  const routes = require('./routes');
+  server.route(routes);
 
   // start server
   server.start();

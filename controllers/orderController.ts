@@ -27,7 +27,3 @@ export const updateOrder = async ({ payload, auth, params }: Request, h: Respons
   const order = await orderRepo.findOne(user.id, _.get(params, 'id'));
   return h.response(order).code(200);
 };
-
-export const test = async ({ payload, auth, params }: Request, h: ResponseToolkit): Promise<ResponseObject> => {
-  return h.response('success').code(200);
-};

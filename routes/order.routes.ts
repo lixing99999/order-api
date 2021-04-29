@@ -35,11 +35,6 @@ const orderRoutes = [
     },
     handler: updateOrder,
   },
-  {
-    method: 'GET',
-    path: '/test',
-    handler: test,
-  },
 ];
 
 module.exports = orderRoutes;

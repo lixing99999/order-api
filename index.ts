@@ -9,7 +9,7 @@ const init = async () => {
   console.log(colors.yellow('STARTING SERVER. PLEASE WAIT...'));
 
   const server: Server = Hapi.server({
-    port: process.env.PORT || 5000,
+    port: process.env.PORT || 3000,
     host: '127.0.0.1',
     routes: {
       cors: {

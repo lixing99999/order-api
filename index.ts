@@ -9,13 +9,12 @@ const init = async () => {
 
   const server: Server = Hapi.server({
     port: process.env.PORT || 5000,
-    host: '127.0.0.1',
+    host: process.env.YOUR_HOST || '0.0.0.0',
     routes: {
       cors: {
         origin: ['*'], // an array of origins or 'ignore'
       },
     },
-    debug: process.env.NODE_ENV !== 'production' ? { request: ['*'] } : false,
   });
 
   server.route({

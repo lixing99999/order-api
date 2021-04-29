@@ -13,12 +13,12 @@ export default abstract class BaseRepository<T> extends AbstractRepository<T> {
   create(userId: unknown, entity: T): Promise<T>;
   async create(userId: unknown, entity: T | T[]): Promise<T | T[]> {
     if (!Array.isArray(entity)) {
-      Object.assign(entity, { created_by: userId, updated_by: userId, created_at: new Date(), updated_at: new Date() });
+      Object.assign(entity, { user_id: userId, created_by: userId, updated_by: userId, created_at: new Date(), updated_at: new Date() });
       return await this.repository.create(entity);
     }
 
     for (let i = 0; i < entity.length; i++) {
-      Object.assign(entity[i], { created_by: userId, updated_by: userId, created_at: new Date(), updated_at: new Date() });
+      Object.assign(entity[i], { user_id: userId, created_by: userId, updated_by: userId, created_at: new Date(), updated_at: new Date() });
     }
 
     return await this.repository.create(entity);
@@ -35,7 +35,7 @@ export default abstract class BaseRepository<T> extends AbstractRepository<T> {
   save(userId: unknown, entity: T): Promise<T>;
   async save(userId: unknown, entity: T | T[]): Promise<T | T[]> {
     const timestamp = { updated_at: new Date(), updated_by: userId };
-    if (!_.get(entity, 'id')) Object.assign(timestamp, { created_at: new Date(), created_by: userId });
+    if (!_.get(entity, 'id')) Object.assign(timestamp, { user_id: userId, created_at: new Date(), created_by: userId });
 
     if (!Array.isArray(entity)) {
       Object.assign(entity, timestamp);

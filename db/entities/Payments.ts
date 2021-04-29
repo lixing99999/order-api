@@ -2,6 +2,9 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('payments', { schema: 'setel-assessment' })
 export class Payments {
+  static readonly STATUS_CONFIRMED = 1;
+  static readonly STATUS_CANCELLED = 2;
+
   @PrimaryGeneratedColumn({ type: 'int', name: 'id', unsigned: true })
   id: number;
 
@@ -10,6 +13,9 @@ export class Payments {
 
   @Column('integer', { name: 'orderId', nullable: true })
   order_id: number | null;
+
+  @Column('integer', { name: 'status', nullable: true })
+  status: number | null;
 
   @Column('integer', { name: 'created_by', nullable: true })
   created_by: number | null;

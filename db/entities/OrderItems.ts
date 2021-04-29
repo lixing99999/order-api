@@ -14,8 +14,11 @@ export class OrderItems {
   @Column('varchar', { name: 'name', nullable: true })
   name: number | null;
 
-  @Column('decimal', { name: 'amount', nullable: true })
+  @Column('integer', { name: 'amount', nullable: true })
   amount: number | null;
+
+  @Column('decimal', { name: 'unit_price', nullable: true })
+  unit_price: number | null;
 
   @Column('integer', { name: 'created_by', nullable: true })
   created_by: number | null;

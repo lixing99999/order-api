@@ -5,5 +5,6 @@ export const orderValidate = {
   items: array().items({
     name: string(),
     amount: number(),
+    unit_price: number(),
   }),
 };

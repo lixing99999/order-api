@@ -12,8 +12,6 @@ export default class OrderItemsRepository extends BaseRepository<Orders> {
       return Object.assign(x, { order_id: orderId });
     });
 
-    console.log(orderItems);
-
     await this.save(userId, orderItems);
   }
 }

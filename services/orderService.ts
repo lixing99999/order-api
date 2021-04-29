@@ -25,10 +25,21 @@ export default class OrderService {
 
       order = await orderRepo.save(userId, <Orders>{
         total: total,
-        status: Orders.STATUS_PENDING,
+        status: request?.status ?? Orders.STATUS_PENDING,
       });
 
       await orderItemRepo.createOrderItems(userId, order.id, _.get(request, 'items'));
+
+      if (order.status == Orders.STATUS_CONFIRMED) {
+        const payment = await paymentService.createPayment(userId, order.id);
+
+        if (payment?.status == 200) {
+          setTimeout(async () => {
+            await this.updateOrder(userId, order.id, Orders.STATUS_DELIVERED);
+            console.log('delivered');
+          }, 60000);
+        }
+      }
 
       await queryRunner.commitTransaction();
     } catch (err) {
@@ -52,14 +63,25 @@ export default class OrderService {
       if (status == Orders.STATUS_CONFIRMED) {
         const payment = await paymentService.createPayment(userId, orderId);
         if (payment?.status == 200) {
-          // timer
-          await this.updateOrder(userId, orderId, Orders.STATUS_DELIVERED);
+          setTimeout(async () => {
+            await this.updateOrder(userId, orderId, Orders.STATUS_DELIVERED);
+            console.log('delivered');
+          }, 60000);
+        }
+      }
+
+      if (status == Orders.STATUS_CANCEL) {
+        const payment = await paymentService.updatePayment(userId, orderId);
+        if (payment?.status == 200) {
+          setTimeout(async () => {
+            await this.updateOrder(userId, orderId, Orders.STATUS_DELIVERED);
+            console.log('delivered');
+          }, 60000);
         }
       }
 
       await queryRunner.commitTransaction();
     } catch (err) {
-      console.log(err);
       await queryRunner.rollbackTransaction();
       throw Boom.badData('Transaction is not success.');
     } finally {
